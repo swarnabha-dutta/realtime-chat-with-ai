@@ -1,0 +1,1 @@
+importuserModel from "../models/user.model"
