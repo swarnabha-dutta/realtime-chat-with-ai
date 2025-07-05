@@ -31,31 +31,9 @@ export const loginController = async (req, res) => {
     }
     try {
         const { email, password } = req.body;
-        const user = await userModel.findOne({ email }).select('+password');
-        
-        if (!user) {
-            return res.status(401).json({
-                errors: 'Invalid credentials'
-            });
-        }
-        const isMatch = await user.isValidPassword(password);
-        
-        if (!isMatch) {
-            return res.status(401).json({
-                errors: 'Invalid isMatch credentials'
-            });
-        }
-        const token = await user.generateJWT();
+       
         res.status(200).json({ user, token });
     } catch (error) {
         res.status(400).send(error.message);
     }
-}
-
-export const profileController = async (req,res) => {
-    console.log(req.user);
-    res.status(200).json({
-        user: req.user
-    });
-
 }

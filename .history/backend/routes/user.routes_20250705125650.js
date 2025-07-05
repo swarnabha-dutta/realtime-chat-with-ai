@@ -19,5 +19,5 @@ router.post("/login",
 
 
 
-router.get('/profile',authMiddleware.authUser, userController.profileController);    
+router.get('/profile', userController.profileController);    
 export default router;

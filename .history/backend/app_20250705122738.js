@@ -9,7 +9,7 @@ connect();
 const app = express();
 
 
-
+https://www.thunderclient.com for cursor IDE
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
