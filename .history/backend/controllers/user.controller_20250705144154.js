@@ -63,10 +63,16 @@ export const profileController = async (req, res) => {
 
 export const logoutController = async (req, res) => {
     try {
-        const token = req.cookies?.token || req.headers.authorization.split(' ')[1];
+        const token = req.cookies?.token || req.headers.authorization?.split(' ')[1];
 
-        redisClient.set(token, 'logout', 'EX', 60 * 60 * 24);
-        res.status(200).json({ message: 'Logged out successfully' });
+        if (token) {
+            // Add token to blacklist in Redis
+            await redisClient.setex(`blacklist:${token}`, 3600, 'true'); // Blacklist for 1 hour
+        }
+
+        // Clear cookie if it exists
+        res.clearCookie('token');
+
     } catch (error) {
         console.log(error);
         res.status(400).send(error.message);
